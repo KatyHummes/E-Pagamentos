@@ -10,6 +10,9 @@ import RadioButton from 'primevue/radiobutton';
 const form = useForm('post', route('store.vault'), {
     name: '',
     vault: null,
+    value: null,
+    number: null,
+    time: null,
 });
 
 const submit = () => {
@@ -45,6 +48,35 @@ const submit = () => {
                                     :minFractionDigits="2" :maxFractionDigits="8" fluid />
                                 <label for="value">Adicionar Valor</label>
                             </FloatLabel>
+                        </div>
+                        <div  class="mt-16">
+                            <h1>Planeje seu Cofrinho</h1>
+                            <div class="grid grid-cols-2 gap-4 mt-4">
+                                
+                                <div class="m-x">
+                                    <span>Qual valor você quer juntar no total?</span>
+
+                                    <InputNumber id="value" v-model="form.value" inputId="minmaxfraction"
+                                        :minFractionDigits="2" :maxFractionDigits="8" mode="currency" currency="BRL"
+                                        fluid />
+                                </div>
+                                <div>
+                                    <h3>E em quanto tempo você quer atingiresse objetivo</h3>
+                                    <InputNumber v-model="form.number" inputId="minmax-buttons" mode="decimal" showButtons
+                                        :min="1" :max="100" fluid />
+
+                                    <div class="flex flex-wrap gap-4">
+                                        <div class="flex items-center">
+                                            <RadioButton v-model="form.time" inputId="month" name="time" value="m" />
+                                            <label for="month" class="ml-2">Meses</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <RadioButton v-model="form.time" inputId="yers" name="time" value="y" />
+                                            <label for="yers" class="ml-2">Anos</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div  class="mt-4 flex justify-end">

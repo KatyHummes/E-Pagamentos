@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Economy;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,13 +15,24 @@ class VaultController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // dd($request->all());
-        Vault::create([
-            'user_id' => auth()->id(),
-            'name' => $request->input('name'),
-            'vault' => $request->input('vault'),
-        ]);
-       
-    }
+{
+    $economy = Economy::create([
+        'value' => $request['value'],
+        'number' => $request['number'],
+        'time' => $request['time'],
+    ]);
+
+    $vault = Vault::create([
+        'user_id' => auth()->id(),
+        'name' => $request['name'],
+        'vault' => $request['vault'],
+        'economy_id' => $request->input('economy_id'), 
+    ]);
+    
+    $vault->update(['economy_id' => $economy->id]);
+
+    return redirect()->route('cofrinho')->with('success', 'Cofrinho e Economia criados com sucesso!');
+}
+
+
 }
